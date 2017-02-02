@@ -5,10 +5,16 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import './index.css';
 
-const defaultState = {laoding: false}
+const defaultState = {loading: false}
 
 const reducer = (state= defaultState, action) => {
-
+  switch(action.type) {
+    case "ASYNC_START":
+      // console.log('action', action);
+      return {...state, loading: true}
+    default:
+      return state;
+  }
 }
 
 const store = createStore(reducer);
