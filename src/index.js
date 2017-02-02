@@ -1,23 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import App from './components/App';
+import reduxThunk from 'redux-thunk';
 import './index.css';
 
-const defaultState = {loading: false}
+const defaultState = {profile: {}, loading: false}
 
 const reducer = (state= defaultState, action) => {
   switch(action.type) {
     case "ASYNC_START":
-      // console.log('action', action);
-      return {...state, loading: true}
+      return {...state, profile: {}, loading: true};
+    case "FETCH_PROFILE":
+      return {
+        ...state,
+        profile: {
+          firstName: action.payload.firstName,
+          picture: action.payload.picture
+        },
+        loading: false
+      }
     default:
       return state;
   }
 }
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(reduxThunk));
 
 ReactDOM.render(
   <Provider store={store}>
