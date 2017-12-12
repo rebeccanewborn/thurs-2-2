@@ -6,27 +6,27 @@ import App from './components/App';
 import reduxThunk from 'redux-thunk';
 import './index.css';
 
-const defaultState = {profile: {}, loading: false}
+const defaultState = { profile: {}, loading: false };
 
-const reducer = (state= defaultState, action) => {
-  switch(action.type) {
-    case "ASYNC_START":
-      return {...state, profile: {}, loading: true};
-    case "FETCH_PROFILE":
+const reducer = (state = defaultState, action) => {
+  switch (action.type) {
+    case 'ASYNC_START':
+      return { ...state, profile: {}, loading: true };
+    case 'FETCH_PROFILE':
       return {
         ...state,
         profile: {
-          firstName: action.payload.firstName,
-          picture: action.payload.picture
+          firstName: action.user.firstName,
+          picture: action.user.picture
         },
         loading: false
-      }
+      };
     default:
       return state;
   }
-}
+};
 
-const store = createStore(reducer, applyMiddleware(reduxThunk));
+const store = createStore(reducer);
 
 ReactDOM.render(
   <Provider store={store}>
